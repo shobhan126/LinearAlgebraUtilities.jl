@@ -3,5 +3,10 @@ uuid = "07d14822-b9a4-4e0c-b102-6a5b02e67fbc"
 authors = ["Shobhan Kulshreshtha <skulshre@usc.edu"]
 version = "1.0.0-DEV"
 
+[deps]
+DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
+
 [compat]
 julia = "1.9.4"
