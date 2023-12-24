@@ -2,18 +2,41 @@ abstract type BasisState end
 
 """
 A simple covenience wrapper for a tuple of subsystem dimensions for a tensor product space.
+    
+    $(TYPEDEF)
+
+where `N` is the number of subsystems.
+
+    $(TYPEDFIELDS)
+
 """
 struct TensoredBasis{N}
+    """Dimensions of each subsystem"""
     dims::Tuple{Vararg{Int,N}}
 end
 
 dims(b::TensoredBasis) = b.dims
 
+"""
+    $(TYPEDSIGNATURES)
+"""
+TensoredBasis(dims::Int...) = TensoredBasis(Tuple(dims))
+
 # helper contructor to convert from dimensions given in AbstractVector form
+"""
+    $(TYPEDSIGNATURES)
+"""
 TensoredBasis(dims::AbstractVector{Int}) = TensoredBasis(Tuple(dims))
 
+
 """
-A basis element of a tensor product space.
+A BasisState for a tensor product space.
+
+    $(TYPEDEF)
+
+where `N` is the number of subsystems.
+
+    $(TYPEDFIELDS)
 """
 struct TensoredBasisState{N} <: BasisState
     basis::TensoredBasis{N}
@@ -29,9 +52,9 @@ end
 TensoredBasisState(b::TensoredBasis, states::AbstractVector{Int}) = TensoredBasisState(b, Tuple(states))
 
 """
-    vec(state::TensorProductBasisState)
+    $(TYPEDSIGNATURES)
 
-Create the complex basis vector correspoding to a given TensorProductBasisState.
+Create the vector representation correspoding to a given TensoredBasis. By default it returns a complex vector space.
 
 ## args
 * `state`: a TensorProductBasisState to convert to a complex state vector.
@@ -65,7 +88,7 @@ function basis_states(b::TensoredBasis{N}) where {N}
 end
 
 """
-    index(bs::TensorProductBasisState)
+    $(TYPEDSIGNATURES)
 
 Convert basis state of a tensor product space to an index into an enumerate of all basis states from
 the canonical order used by the Kronecker product.
@@ -80,7 +103,7 @@ The linear index of the state into the canonical tensor product basis states.
 Consider a tensor product of two qubits `b = TensorProductBasis((2,2))`. Then states `(0,0), (0,1),
 (1,0), (1,1)` are numbered `1, 2, 3, 4` so that `index(TensorProductBasisState(b, (1,0)) == 3`.
 """
-index(bs::TensoredBasisState) = nzindex(bs.states, bs.basis.dims)
+linearindex(bs::TensoredBasisState) = nzindex(bs.states, bs.basis.dims)
 
 """
     getindex(b::TensorProductBasis, i::Int)

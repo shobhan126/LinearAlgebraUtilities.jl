@@ -54,10 +54,10 @@ function nzindex(excitations::Base.AbstractVecOrTuple{T}, sitedims::AbstractVecO
     index = zero(T)
     for (e, d) in zip(excitations, sitedims)
         @assert 0 <= e < d "for each site, 0 <= excitation < sitedim"
-        @fastmath index *= d
-        @fastmath index += e
+        index *= d
+        index += e
     end
-    @fastmath index += one(T)
+    index += one(T)
     return index
 end
 nzindex(excitations::CartesianIndex{N}, sitedims) where {N} = nzindex(excitations.I, sitedims)
